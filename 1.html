@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let cartList=[
+        {
+            barcode:"code00001",
+            name:"可乐",
+            unit:"瓶",
+            price:3.00
+        },
+        {
+            barcode:"code00001",
+            name:"可乐",
+            unit:"瓶",
+            price:3.00
+        },
+        {
+            barcode:"code00002",
+            name:"雪碧",
+            unit:"瓶",
+            price:2.50
+        },
+        {
+            barcode:"code00001",
+            name:"可乐",
+            unit:"瓶",
+            price:3.00
+        }
+    ];
+
+
+
+    function countNum(cartList){
+        let result=[];
+
+        for (let i=0;i<cartList.length;i++){
+            let existList=result.find(function(item){
+                return item.barcode === cartList[i].barcode;
+            });
+        if (existList)
+        {
+            existList.count ++;
+        }else {
+            result.push(Object.assign({},cartList[i],{
+                count:1
+            }));
+        }
+        }
+        return result;
+
+    }
+
+    //console.log(countNum(cartList));
+
+
+
+    function subtotalDeal(result){
+        let subtotalDealList=[];
+        for (let i=0;i<result.length;i++){
+            subtotalDealList.push(Object.assign({},result[i],{
+                subtotal:result[i].count*result[i].price
+            }));
+        }
+    return subtotalDealList;
+    }
+
+    function totalDeal(subtotalDealList) {
+        let total=0;
+        for (let i=0;i<subtotalDealList.length;i++){
+            total+=subtotalDealList[i].subtotal;
+        }
+        return total;
+    }
+
+    function print(total,subtotalDealList) {
+        console.log("************小票打印************")
+        for (let i=0;i<subtotalDealList.length;i++){
+            console.log("   货号     :"+subtotalDealList[i].barcode);
+            console.log("   数量     :"+subtotalDealList[i].count+subtotalDealList[i].unit);
+            console.log("   名称     :"+subtotalDealList[i].name);
+            console.log("   单价     :"+subtotalDealList[i].price);
+            console.log("   小计     :"+subtotalDealList[i].subtotal);
+            console.log("\n");
+
+            //console.log("barcode:"+subtotalDealList[i].barcode);
+        }
+            console.log("   总计     :"+total);
+        console.log("************小票打印************")
+    }
+
+    function printreceipt(cartList){
+        let result=countNum(cartList);
+        let subtotalDealList=subtotalDeal(result);
+        let total=totalDeal(subtotalDealList);
+        print(total,subtotalDealList);
+        //return(total);
+    }
+    printreceipt(cartList);
+
+</script>
+</body>
+</html>
